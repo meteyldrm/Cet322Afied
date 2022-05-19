@@ -1,0 +1,1 @@
+Scaffold-DbContext "data source=MAVERICK;initial catalog=AfiedDB_322;persist security info=True;user id=virtualLogin;password=virtualPassword;MultipleActiveResultSets=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Force
