@@ -1,8 +1,27 @@
-﻿@{
+﻿@using System.Diagnostics
+@using System.Net.Http
+@{
     ViewData["Title"] = "Home Page";
 }
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
 
-<div class="text-center">
+<div class="text-center" xmlns="http://www.w3.org/1999/html">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    
+    <br>
+    <br>
+    <br>
+    
+    @if (HttpContextAccessor.HttpContext.Session.IsAvailable) {
+        <br>
+        @HttpContextAccessor.HttpContext.Session.GetString("userEmail")?.ToString()
+        <br>
+        @HttpContextAccessor.HttpContext.Session.GetString("userPasswordHash")?.ToString()
+    } else {
+        <p>CONTEXT UNAVAILABLE</p>
+    }
+    
+
 </div>

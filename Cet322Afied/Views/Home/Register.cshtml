@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+<div>
+    @using (Html.BeginForm("RegisterAction", "Home", FormMethod.Post))
+    {
+        <div class="container">
+            <label for="userName"><b>Full name</b></label>
+            <input type="text" placeholder="Enter Name" name="userName" required>
+            
+            <label for="userPhone"><b>Phone Number</b></label>
+            <input type="text" placeholder="Enter Phone Number" name="userPhone" required>
+            
+            <label for="userEmail"><b>Email</b></label>
+            <input type="text" placeholder="Enter Email" name="userEmail" required>
+
+            <label for="userPassword"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="userPassword" required>
+
+            <button type="submit" value="Register">Register</button>
+        </div>
+    }
+</div>
+</body>
+</html>

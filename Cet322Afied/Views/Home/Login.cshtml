@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+<div>
+    @using (Html.BeginForm("LoginAction", "Home", FormMethod.Post))
+    {
+        <div class="container">
+            <label for="userEmail"><b>Email</b></label>
+            <input type="text" placeholder="Enter Email" name="userEmail" required>
+
+            <label for="userPassword"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="userPassword" required>
+
+            <button type="submit" value="Login">Login</button>
+        </div>
+    }
+</div>
+</body>
+</html>
