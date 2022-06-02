@@ -54,7 +54,7 @@ namespace Cet322Afied
             app.UseStaticFiles();
 
             app.UseRouting();
-            
+
             app.UseSession();
 
             app.UseAuthorization();

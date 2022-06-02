@@ -2,26 +2,16 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 
 namespace Cet322Afied.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
         public IActionResult Index() {
             return View();
         }
@@ -32,6 +22,7 @@ namespace Cet322Afied.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
         
+        [Route("/Login")]
         [HttpGet]
         public IActionResult Login() {
             return View();
@@ -44,10 +35,8 @@ namespace Cet322Afied.Controllers
             string userPassword = fc["userPassword"];
             AfiedDB_322Context context = new AfiedDB_322Context();
             
-            Console.WriteLine("TEST LOGIN");
             Console.WriteLine(userEmail);
             Console.WriteLine(userPassword);
-            
 
             HashAlgorithm hashAlgorithm = new SHA256CryptoServiceProvider();
 
@@ -61,17 +50,18 @@ namespace Cet322Afied.Controllers
             HttpContext.Session.SetString("userEmail", "?");
             HttpContext.Session.SetString("userPasswordHash", "?");
 
+            ViewBag.LoginState = true;
             if (user != null) {
                 if (Convert.FromBase64String(user.UserPasswordHash).SequenceEqual(Convert.FromBase64String(userPasswordHash))) {
                     HttpContext.Session.SetString("userEmail", userEmail);
                     HttpContext.Session.SetString("userPasswordHash", userPasswordHash);
-                    Console.WriteLine("USER LOGGED IN");
                 }
             }
 			
             return RedirectToAction("Index");
         }
         
+        [Route("/Register")]
         [HttpGet]
         public IActionResult Register() {
             return View();

@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -16,6 +18,7 @@
             <input type="password" placeholder="Enter Password" name="userPassword" required>
 
             <button type="submit" value="Login">Login</button>
+
         </div>
     }
 </div>
