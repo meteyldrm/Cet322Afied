@@ -1,0 +1,27 @@
+﻿@using System.Diagnostics
+@using System.Net.Http
+@{
+    ViewData["Title"] = "Cart";
+}
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+<div xmlns="http://www.w3.org/1999/html">
+    <ul>
+        
+        <!--
+        Promote user to courier (email needed)
+        View and manage all package deliveries (previous and currently tracked, by filter)
+        Add new product categories
+        Add new products (Name, image, price and category)
+        Update product information
+        -->
+
+        @foreach (var i in ViewBag.products) {
+            <li>
+                @i
+            </li>
+        }
+
+    </ul>
+</div>

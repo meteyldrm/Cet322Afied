@@ -8,12 +8,15 @@
 
 <div xmlns="http://www.w3.org/1999/html">
     <ul>
-    
-    @foreach (var i in ViewBag.products) {
-        <li>
-            @i
-        </li>
-    }
-    
+        
+        @if (ViewBag.products != null) {
+            foreach (var i in ViewBag.products) {
+                <li>
+                    @i.ProductName
+                </li>
+            }
+        } else {
+            <div>Your shopping cart is empty</div>
+        }
     </ul>
 </div>

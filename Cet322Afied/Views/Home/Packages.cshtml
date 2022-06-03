@@ -1,0 +1,25 @@
+﻿@using System.Diagnostics
+@using System.Net.Http
+@{
+    ViewData["Title"] = "Cart";
+}
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+<div xmlns="http://www.w3.org/1999/html">
+    <ul>
+        
+        <!--
+        View unassigned orders (Name and date shown)
+        View tracked orders (Customer address and contact information shown; orders, prices and total price shown)
+        Mark delivered
+        -->
+
+        @foreach (var i in ViewBag.products) {
+            <li>
+                @i
+            </li>
+        }
+
+    </ul>
+</div>

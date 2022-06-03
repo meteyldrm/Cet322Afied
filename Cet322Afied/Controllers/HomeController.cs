@@ -42,6 +42,12 @@ namespace Cet322Afied.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
         
+        [Route("/NotFound")]
+        public IActionResult PageNotFound()
+        {
+            return View();
+        }
+        
         [Route("/Login")]
         [HttpGet]
         public IActionResult Login() {
@@ -110,6 +116,7 @@ namespace Cet322Afied.Controllers
             string userEmail = fc["userEmail"];
             string userPassword = fc["userPassword"];
             string userPhone = fc["userPhone"];
+            string userAddress = fc["userAddress"];
             string userName = fc["userName"];
             
             HashAlgorithm hashAlgorithm = new SHA256CryptoServiceProvider();
@@ -124,40 +131,109 @@ namespace Cet322Afied.Controllers
             };
 
             context.TblUser.Add(user);
-            context.SaveChanges(); 
+            context.SaveChanges();
+
+            TblCustomerUser customerUser = new TblCustomerUser() {
+                CustomerId = context.TblUser.FirstOrDefault(i => i.UserEmail.Equals(userEmail))!.UserId,
+                CustomerAddress = userAddress
+            };
+            context.TblCustomerUser.Add(customerUser);
+            context.SaveChanges();
             return RedirectToAction("Login");
         }
         
         [Route("/Cart")]
         [HttpGet]
         public IActionResult Cart() {
+            AfiedDB_322Context context = new AfiedDB_322Context();
+
+            if (validateLogin(getUserFromSession())) {
+                var user = context.TblUser.FirstOrDefault(u => u.UserEmail.Equals(getUserFromSession()[0]));
+                if (user != null) {
+                    var cart = context.TblOrder.Where(i => i.OrderCustomerId.Equals(user.UserId)).FirstOrDefault(i => !i.OrderDate.HasValue);
+                    if(cart != null) {
+                        var productOrders = context.TblProductOrder.Where(i => i.OrderId.Equals(cart.OrderId));
+                        var products = context.TblProduct.Join(productOrders,
+                            productOrder => productOrder.ProductId,
+                            product => product.ProductId,
+                            (product, order) => new {
+                                ProductName = product.ProductName,
+                                ProductMeasurementUnit = product.ProductMeasurementUnit,
+                                ProductQuantity = order.Quantity,
+                                ProductPrice = order.Price
+                            });
+                        ViewBag.products = products;
+                    }
+                }
+            }
+            
             return View();
         }
         
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Cart(IFormCollection fc) {
-            AfiedDB_322Context context = new AfiedDB_322Context();
-            
-            string userEmail = fc["userEmail"];
-            string userPassword = fc["userPassword"];
-            string userPhone = fc["userPhone"];
-            string userName = fc["userName"];
-            
-            HashAlgorithm hashAlgorithm = new SHA256CryptoServiceProvider();
-            byte[] _byteHash = Encoding.UTF8.GetBytes(userPassword);
-            string userPasswordHash = Convert.ToBase64String(hashAlgorithm.ComputeHash(_byteHash));
-
-            TblUser user = new TblUser() {
-                UserName = userName,
-                UserEmail = userEmail,
-                UserPhone = userPhone,
-                UserPasswordHash = userPasswordHash
-            };
-
-            context.TblUser.Add(user);
-            context.SaveChanges(); 
             return View();
+        }
+        
+        [Route("/Admin")]
+        [HttpGet]
+        public IActionResult Admin() {
+            if (validateLogin(getUserFromSession())) {
+                if (getUserAuthLevel(getUserFromSession()) == 0) {
+                    return View();
+                }
+            }
+
+            return RedirectToAction("PageNotFound");
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AdminManageAction(IFormCollection fc) {
+            AfiedDB_322Context context = new AfiedDB_322Context();
+
+            if (fc["manageActionValue"] == "UpdateAuth") {
+                if (checkUserExists(fc["userEmail"])) {
+                    var user = context.TblUser.FirstOrDefault(u => u.UserEmail.Equals(fc["userEmail"]));
+                    if (user != null) {
+                        var managerUser = context.TblManagerUser.FirstOrDefault(i => i.ManagerId == user.UserId);
+                        if (managerUser != null) {
+                            if (int.TryParse(fc["userAuthLevel"].ToString(), out var level)) {
+                                managerUser.ManagerAuthorizationLevel = level;
+                                context.SaveChanges();
+                            }
+                        } else {
+                            if (int.TryParse(fc["userAuthLevel"].ToString(), out var level)) {
+                                TblManagerUser manager = new TblManagerUser() {
+                                    ManagerId = user.UserId,
+                                    ManagerAuthorizationLevel = level
+                                };
+                                context.TblManagerUser.Add(manager);
+                                context.SaveChanges();
+                            }
+                        }
+                    }
+                }
+            } else if (fc["manageActionValue"] == "DeleteUser") {
+                if (checkUserExists(fc["userEmail"])) {
+                    var user = context.TblUser.First(u => u.UserEmail.Equals(fc["userEmail"]));
+                    var cu = context.TblCustomerUser.FirstOrDefault(i => i.CustomerId == user.UserId);
+                    if (cu != null) {
+                        context.TblCustomerUser.Remove(cu);
+                        context.SaveChanges();
+                    }
+                    var mu = context.TblManagerUser.FirstOrDefault(i => i.ManagerId == user.UserId);
+                    if (mu != null) {
+                        context.TblManagerUser.Remove(mu);
+                        context.SaveChanges();
+                    }
+                    context.TblUser.Remove(user);
+                    context.SaveChanges();
+                }
+            }
+            
+            return RedirectToAction("Admin");
         }
         
         #endregion
@@ -176,6 +252,21 @@ namespace Cet322Afied.Controllers
             }
 
             return false;
+        }
+
+        bool checkUserExists(string email) {
+            AfiedDB_322Context context = new AfiedDB_322Context();
+            
+            TblUser user = context.TblUser.FirstOrDefault(user => user.UserEmail.Equals(email));
+            if (user != null) {
+                return true;
+            }
+
+            return false;
+        }
+
+        bool validateLogin(List<string> person) {
+            return validateLogin(person[0], person[1]);
         }
 
         int getUserAuthLevel(string userEmail, string pwHash) {

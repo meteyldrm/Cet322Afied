@@ -191,7 +191,7 @@ namespace Cet322Afied.Models
                     .IsRequired()
                     .HasColumnName("userName")
                     .HasMaxLength(63)
-                    .IsUnicode(false);
+                    .IsUnicode(true);
 
                 entity.Property(e => e.UserPasswordHash)
                     .IsRequired()
