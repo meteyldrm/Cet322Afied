@@ -6,14 +6,21 @@
 @using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor HttpContextAccessor
 
-<div class="text-center" xmlns="http://www.w3.org/1999/html">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    
-    <br>
-    <br>
-    <br>
-    
+<div xmlns="http://www.w3.org/1999/html">
+    <div class="align product_filters">
+        <!-- Filters and search -->
+        <label>Fiyat</label><br>
+        <input type="number" step="20" placeholder="Minimum fiyat"><br>
+        <input type="number" step="20" placeholder="Maximum fiyat"><br>
+        <button class="btn-default" type="submit">Uygula</button>
+        <br>
+        <br>
+        <label>Kategori</label>
+        <input type="radio" checked name="category" value="Hepsi">
+    </div>
+
+    <div class="align product_display">aaaaaaa</div>
+
     @if (HttpContextAccessor.HttpContext.Session.IsAvailable) {
         <br>
         @HttpContextAccessor.HttpContext.Session.GetString("userEmail")?.ToString()
@@ -22,6 +29,6 @@
     } else {
         <p>CONTEXT UNAVAILABLE</p>
     }
-    
+
 
 </div>

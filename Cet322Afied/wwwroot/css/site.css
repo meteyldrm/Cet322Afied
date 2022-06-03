@@ -76,6 +76,7 @@ Page layout side panels and positioning
 
 .align {
   float: left;
+  margin-top: 20px;
 }
 
 .left, .right {
@@ -83,11 +84,17 @@ Page layout side panels and positioning
 }
 
 .product_filters {
-  width: 15%;
+  overflow: visible;
+  z-index: 1;
+  min-width: 15%;
+  max-width: 30%;
+  padding: 5px;
 }
 
 .product_display {
+  background-color: #9fcdff;
   width: 45%;
+  margin-left: 20%;
 }
 
 .product_item {
@@ -106,12 +113,17 @@ Page layout side panels and positioning
   max-width: 100%;
 }
 
-
-
-input[type=text], input[type=password] {
+.styled_input {
   width: 100%;
   padding: 12px 20px;
-  margin: 8px 0;
+  margin: 8px 4px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.styled_button {
+  margin: 8px 4px;
   display: inline-block;
   border: 1px solid #ccc;
   box-sizing: border-box;

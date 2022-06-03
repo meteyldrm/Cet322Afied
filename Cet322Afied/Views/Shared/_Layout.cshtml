@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@inject IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -16,18 +19,43 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                
+                
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Register">Register</a>
-                        </li>
+                    
+                        @{ var routeList = new List<string>();}
                         
+                        @if (HttpContextAccessor.HttpContext.Session.IsAvailable) {
+                            var email = HttpContextAccessor.HttpContext.Session.GetString("userEmail");
+                            if (email != "" && email != "?" && email != null) {
+                                var s = HttpContextAccessor.HttpContext.Session.GetInt32("userAuthLevel");
+                                if(s <= 0){
+                                    routeList.Add("Admin");
+                                } if(s <= 1){
+                                    routeList.Add("Management");
+                                } if(s <= 2){
+                                    routeList.Add("Packages");
+                                } if(s <= 3){
+                                    routeList.Add("Cart");
+                                }
+                                
+                                routeList.Add("Logout");
+                            } else {
+                                routeList.Add("Login");
+                                routeList.Add("Register");
+                            }
+                        } else {
+                            routeList.Add("Login");
+                            routeList.Add("Register");
+                        }
+                    
+                    @foreach (var i in routeList) {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="@i">@i</a>
+                        </li>
+                    }
+                    
                     </ul>
                 </div>
             </div>
@@ -41,6 +69,6 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
