@@ -7,28 +7,55 @@
 @inject IHttpContextAccessor HttpContextAccessor
 
 <div xmlns="http://www.w3.org/1999/html">
-    <div class="align product_filters">
-        <!-- Filters and search -->
-        <label>Fiyat</label><br>
-        <input type="number" step="20" placeholder="Minimum fiyat"><br>
-        <input type="number" step="20" placeholder="Maximum fiyat"><br>
-        <button class="btn-default" type="submit">Uygula</button>
-        <br>
-        <br>
-        <label>Kategori</label>
-        <input type="radio" checked name="category" value="Hepsi">
-    </div>
-
-    <div class="align product_display">aaaaaaa</div>
-
-    @if (HttpContextAccessor.HttpContext.Session.IsAvailable) {
-        <br>
-        @HttpContextAccessor.HttpContext.Session.GetString("userEmail")?.ToString()
-        <br>
-        @HttpContextAccessor.HttpContext.Session.GetString("userPasswordHash")?.ToString()
+    @if (ViewBag.activeUser != null) {
+        <ul>
+            @foreach (var i in ViewBag.products) {
+                @using (Html.BeginForm("CartAddAction", "Home", FormMethod.Post))
+                {
+                    <li>
+                        <ul class="list-group list-group-horizontal">
+                            <li class="list-group-item">
+                                @i.ProductName
+                            </li>
+                            <li class="list-group-item">
+                                @i.ProductPrice ₺
+                            </li>
+                            <li class="list-group-item">
+                                <ul class="list-group list-group-horizontal"><li class="list-group-item">
+                                    <input type="text" placeholder="@i.ProductMeasurementUnit" name="productQuantity">
+                                    <button type="submit" name="manageActionValue" value="AddToCart">Add To Cart</button>
+                                    <input type="hidden" name="productName" value="@i.ProductName">
+                                </li></ul>
+                            </li>
+                        </ul>
+                    </li>
+                }
+            }
+        </ul>
+        
     } else {
-        <p>CONTEXT UNAVAILABLE</p>
+        <ul>
+            @foreach (var i in ViewBag.products) {
+                <li>
+                    <ul style="display: inline">
+                        <li>
+                            @i.ProductName
+                        </li>
+                        <li>
+                            @i.ProductPrice ₺
+                        </li>
+                        <li>
+                            @i.ProductQuantity @i.ProductMeasurementUnit
+                        </li>
+                    </ul>
+                </li>
+            }
+        </ul>
     }
+    
+    
+    
+    
 
 
 </div>

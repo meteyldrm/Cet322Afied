@@ -51,7 +51,7 @@ namespace Cet322Afied.Models
                     .IsRequired()
                     .HasColumnName("customerAddress")
                     .HasMaxLength(127)
-                    .IsUnicode(false);
+                    .IsUnicode(true);
 
                 entity.HasOne(d => d.Customer)
                     .WithOne(p => p.TblCustomerUser)
@@ -110,14 +110,14 @@ namespace Cet322Afied.Models
                 entity.Property(e => e.ProductMeasurementUnit)
                     .HasColumnName("productMeasurementUnit")
                     .HasMaxLength(15)
-                    .IsUnicode(false)
+                    .IsUnicode(true)
                     .HasDefaultValueSql("('count')");
 
                 entity.Property(e => e.ProductName)
                     .IsRequired()
                     .HasColumnName("productName")
                     .HasMaxLength(63)
-                    .IsUnicode(false);
+                    .IsUnicode(true);
 
                 entity.Property(e => e.ProductPrice)
                     .HasColumnName("productPrice")
@@ -141,7 +141,7 @@ namespace Cet322Afied.Models
                     .IsRequired()
                     .HasColumnName("categoryName")
                     .HasMaxLength(63)
-                    .IsUnicode(false);
+                    .IsUnicode(true);
             });
 
             modelBuilder.Entity<TblProductOrder>(entity =>

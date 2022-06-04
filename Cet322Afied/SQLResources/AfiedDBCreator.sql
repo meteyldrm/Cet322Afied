@@ -4,7 +4,7 @@ use AfiedDB_322
 
 create table TblUser(
     userID int primary key identity (1,1),
-    userName varchar(63) not null,
+    userName nvarchar(63) not null,
     userPhone varchar(15) not null,
     userEmail varchar(127) not null,
     userPasswordHash char(256) not null
@@ -12,7 +12,7 @@ create table TblUser(
 
 create table TblCustomerUser(
     customerID int primary key,
-    customerAddress varchar(127) not null
+    customerAddress nvarchar(127) not null
 )
 
 create table TblManagerUser(
@@ -23,15 +23,15 @@ create table TblManagerUser(
 
 create table TblProductCategory(
     categoryID int primary key identity (1,1),
-    categoryName varchar(63) not null
+    categoryName nvarchar(63) not null
 )
 
 create table TblProduct(
     productID int primary key identity (1,1),
-    productName varchar(63) not null,
+    productName nvarchar(63) not null,
     productCategory int not null,
     productPrice decimal not null,
-	productMeasurementUnit varchar(15) default 'count'
+	productMeasurementUnit nvarchar(15) default 'count'
 )
 
 create table TblOrder(

@@ -7,21 +7,72 @@
 @inject IHttpContextAccessor HttpContextAccessor
 
 <div xmlns="http://www.w3.org/1999/html">
-    <ul>
-        
-        <!--
-        Promote user to courier (email needed)
-        View and manage all package deliveries (previous and currently tracked, by filter)
-        Add new product categories
-        Add new products (Name, image, price and category)
-        Update product information
-        -->
-
-        @foreach (var i in ViewBag.products) {
-            <li>
-                @i
-            </li>
+    <!--
+    Promote user to courier (email needed)
+    View and manage all package deliveries (previous and currently tracked, by filter)
+    Add new product categories
+    Add new products (Name, image, price and category)
+    Update product information
+    -->
+    @using (Html.BeginForm("ManagerCourierManageAction", "Home", FormMethod.Post))
+    {
+    <div class="container" style="margin: 5%">
+        <label for="userEmail"><b>Email to be managed</b></label>
+        <input class="styled_input" type="text" placeholder="Enter User Email" name="userEmail" required>
+                
+        <label for="userCourierState"><b>Courier status</b></label>
+        <input type="checkbox" name="userCourierState" value="true">
+        <input type="hidden" name="userCourierState" value="false">
+        <button class="styled_button" type="submit" name="manageActionValue" value="UpdateCourierState">Update</button>
+    </div>
+    }
+    <div style="margin-top: 100px">
+        @using (Html.BeginForm("ManagerCategoryManageAction", "Home", FormMethod.Post))
+        {
+            <div class="container" style="margin: 5%">
+                <label for="productCategory"><b>Category name</b></label>
+                <input class="styled_input" type="text" placeholder="Enter Category Name" name="productCategory" required>
+                
+                <label for="productCategoryReplace"><b>Category name</b></label>
+                <input class="styled_input" type="text" placeholder="Replace With This Category Name" name="productCategoryReplace">
+                <input type="hidden" name="productCategoryReplace" value="">
+                        
+                <div style="display: inline">
+                    <button class="styled_button" type="submit" name="manageActionValue" value="AddCategory">Add Category</button>
+                    <button class="styled_button" type="submit" name="manageActionValue" value="RenameCategory">Rename Category</button>
+                    <button class="styled_button" type="submit" name="manageActionValue" value="DeleteCategory">Delete Category</button>
+                </div>
+            </div>
         }
-
-    </ul>
+    </div>
+    
+    <div style="margin-top: 100px">
+        @using (Html.BeginForm("ManagerProductManageAction", "Home", FormMethod.Post))
+            {
+            <div class="container" style="margin: 5%">
+                <label for="productName"><b>Product Name</b></label>
+                <input class="styled_input" type="text" placeholder="Enter Product Name" name="productName" required>
+                
+                <label for="productNameReplace"><b>Replacement Name</b></label>
+                <input class="styled_input" type="text" placeholder="Replace With This Name" name="productNameReplace">
+                <input type="hidden" name="productNameReplace" value="">
+                
+                <label for="productCategory"><b>Category name</b></label>
+                <input class="styled_input" type="text" placeholder="Enter Category Name" name="productCategory" required>
+                
+                <label for="productPrice"><b>Price</b></label>
+                <input class="styled_input" type="text" placeholder="Enter Price" name="productPrice" required>
+                
+                <label for="productMeasurement"><b>Measurement Unit</b></label>
+                <input class="styled_input" type="text" placeholder="Enter Measurement Unit If Not Countable" name="productMeasurement">
+                <input type="hidden" name="productMeasurement" value="count">
+                        
+                <div style="display: inline">
+                    <button class="styled_button" type="submit" name="manageActionValue" value="AddProduct">Add Product</button>
+                    <button class="styled_button" type="submit" name="manageActionValue" value="UpdateProduct">Update Product</button>
+                    <button class="styled_button" type="submit" name="manageActionValue" value="DeleteProduct">Delete Product</button>
+                </div>
+            </div>
+            }
+    </div>
 </div>
