@@ -23,7 +23,7 @@
         <label for="userCourierState"><b>Courier status</b></label>
         <input type="checkbox" name="userCourierState" value="true">
         <input type="hidden" name="userCourierState" value="false">
-        <button class="styled_button" type="submit" name="manageActionValue" value="UpdateCourierState">Update</button>
+        <button class="btn btn-info" type="submit" name="manageActionValue" value="UpdateCourierState">Update</button>
     </div>
     }
     <div style="margin-top: 100px">
@@ -38,9 +38,9 @@
                 <input type="hidden" name="productCategoryReplace" value="">
                         
                 <div style="display: inline">
-                    <button class="styled_button" type="submit" name="manageActionValue" value="AddCategory">Add Category</button>
-                    <button class="styled_button" type="submit" name="manageActionValue" value="RenameCategory">Rename Category</button>
-                    <button class="styled_button" type="submit" name="manageActionValue" value="DeleteCategory">Delete Category</button>
+                    <button class="btn btn-outline-primary" type="submit" name="manageActionValue" value="AddCategory">Add Category</button>
+                    <button class="btn btn-info" type="submit" name="manageActionValue" value="RenameCategory">Rename Category</button>
+                    <button class="btn btn-danger" type="submit" name="manageActionValue" value="DeleteCategory">Delete Category</button>
                 </div>
             </div>
         }
@@ -51,26 +51,26 @@
             {
             <div class="container" style="margin: 5%">
                 <label for="productName"><b>Product Name</b></label>
-                <input class="styled_input" type="text" placeholder="Enter Product Name" name="productName" required>
+                <input class="styled_input form-control" type="text" placeholder="Enter Product Name" name="productName" required>
                 
                 <label for="productNameReplace"><b>Replacement Name</b></label>
-                <input class="styled_input" type="text" placeholder="Replace With This Name" name="productNameReplace">
+                <input class="styled_input form-control" type="text" placeholder="Replace With This Name" name="productNameReplace">
                 <input type="hidden" name="productNameReplace" value="">
                 
                 <label for="productCategory"><b>Category name</b></label>
-                <input class="styled_input" type="text" placeholder="Enter Category Name" name="productCategory" required>
+                <input class="styled_input form-control" type="text" placeholder="Enter Category Name" name="productCategory" required>
                 
                 <label for="productPrice"><b>Price</b></label>
-                <input class="styled_input" type="text" placeholder="Enter Price" name="productPrice" required>
+                <input class="styled_input form-control" type="text" placeholder="Enter Price" name="productPrice" required>
                 
                 <label for="productMeasurement"><b>Measurement Unit</b></label>
-                <input class="styled_input" type="text" placeholder="Enter Measurement Unit If Not Countable" name="productMeasurement">
+                <input class="styled_input form-control" type="text" placeholder="Enter Measurement Unit If Not Countable" name="productMeasurement">
                 <input type="hidden" name="productMeasurement" value="count">
                         
                 <div style="display: inline">
-                    <button class="styled_button" type="submit" name="manageActionValue" value="AddProduct">Add Product</button>
-                    <button class="styled_button" type="submit" name="manageActionValue" value="UpdateProduct">Update Product</button>
-                    <button class="styled_button" type="submit" name="manageActionValue" value="DeleteProduct">Delete Product</button>
+                    <button class="btn btn-outline-primary" type="submit" name="manageActionValue" value="AddProduct">Add Product</button>
+                    <button class="btn btn-info" type="submit" name="manageActionValue" value="UpdateProduct">Update Product</button>
+                    <button class="btn btn-danger" type="submit" name="manageActionValue" value="DeleteProduct">Delete Product</button>
                 </div>
             </div>
             }

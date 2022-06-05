@@ -16,14 +16,14 @@ View and manage existing managers, couriers and customers
         {
         <div class="container" style="margin: 5%">
             <label for="userEmail"><b>Email to be managed</b></label>
-            <input class="styled_input" type="text" placeholder="Enter User Email" name="userEmail" required>
+            <input class="styled_input form-control" type="text" placeholder="Enter User Email" name="userEmail" required>
                     
             <label for="userAuthLevel"><b>Authorization Level</b></label>
-            <input class="styled_input" type="text" placeholder="0: admin, 1: manager, 2:courier, 3:customer, 4:visitor" name="userAuthLevel">
+            <input class="styled_input form-control" type="text" placeholder="0: admin, 1: manager, 2:courier, 3:customer, 4:visitor" name="userAuthLevel">
             
             <div style="display: inline">
-                <button class="styled_button" type="submit" name="manageActionValue" value="UpdateAuth">Update</button>
-                <button class="styled_button" type="submit" name="manageActionValue" value="DeleteUser">Delete</button>
+                <button class="btn btn-info" type="submit" name="manageActionValue" value="UpdateAuth">Update</button>
+                <button class="btn btn-danger" type="submit" name="manageActionValue" value="DeleteUser">Delete</button>
             </div>
         </div>
         }

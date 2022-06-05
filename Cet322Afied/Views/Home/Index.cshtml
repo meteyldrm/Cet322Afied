@@ -7,50 +7,48 @@
 @inject IHttpContextAccessor HttpContextAccessor
 
 <div xmlns="http://www.w3.org/1999/html">
-    @if (ViewBag.activeUser != null) {
-        <ul>
+    @if (ViewBag.activeUser[0] != null && ViewBag.activeUser[0] != "") {
+        Console.WriteLine($"Text is |{ViewBag.activeUser[0]}|");
+        <div class="container">
             @foreach (var i in ViewBag.products) {
                 @using (Html.BeginForm("CartAddAction", "Home", FormMethod.Post))
                 {
-                    <li>
-                        <ul class="list-group list-group-horizontal">
-                            <li class="list-group-item">
-                                @i.ProductName
-                            </li>
-                            <li class="list-group-item">
-                                @i.ProductPrice ₺
-                            </li>
-                            <li class="list-group-item">
-                                <ul class="list-group list-group-horizontal"><li class="list-group-item">
-                                    <input type="text" placeholder="@i.ProductMeasurementUnit" name="productQuantity">
-                                    <button type="submit" name="manageActionValue" value="AddToCart">Add To Cart</button>
-                                    <input type="hidden" name="productName" value="@i.ProductName">
-                                </li></ul>
-                            </li>
-                        </ul>
-                    </li>
+                    <div class="row">
+                        <div class="col-sm">
+                            @i.ProductName
+                        </div>
+                        <div class="col-sm">
+                            @i.ProductPrice ₺
+                        </div>
+                        <div class="col-md">
+                            <input type="text" class="form-control" placeholder="@i.ProductMeasurementUnit" name="productQuantity">
+                        </div>
+                        <div class="col-sm">
+                            <button class="btn btn-outline-primary" type="submit" name="manageActionValue" value="AddToCart">Add To Cart</button>
+                        </div>
+                        <div class="col-sm">
+                            <input type="hidden" name="productName" value="@i.ProductName">
+                        </div>
+                    </div>
                 }
             }
-        </ul>
-        
+        </div>
     } else {
-        <ul>
+        <div class="container">
             @foreach (var i in ViewBag.products) {
-                <li>
-                    <ul style="display: inline">
-                        <li>
+                @using (Html.BeginForm("CartAddAction", "Home", FormMethod.Post))
+                {
+                    <div class="row">
+                        <div class="col-sm">
                             @i.ProductName
-                        </li>
-                        <li>
+                        </div>
+                        <div class="col-sm">
                             @i.ProductPrice ₺
-                        </li>
-                        <li>
-                            @i.ProductQuantity @i.ProductMeasurementUnit
-                        </li>
-                    </ul>
-                </li>
+                        </div>
+                    </div>
+                }
             }
-        </ul>
+        </div>
     }
     
     

@@ -69,8 +69,8 @@ namespace Cet322Afied.Controllers
             TblUser user = context.TblUser.FirstOrDefault(user => user.UserEmail.Equals(userEmail));
             if(!HttpContext.Session.IsAvailable) return RedirectToAction("Index");
             
-            HttpContext.Session.SetString("userEmail", "?");
-            HttpContext.Session.SetString("userPasswordHash", "?");
+            HttpContext.Session.SetString("userEmail", "");
+            HttpContext.Session.SetString("userPasswordHash", "");
 
             if (user != null) {
                 if (Convert.FromBase64String(user.UserPasswordHash).SequenceEqual(Convert.FromBase64String(userPasswordHash))) {
@@ -88,11 +88,10 @@ namespace Cet322Afied.Controllers
         public IActionResult Logout() {
             Console.WriteLine("LOGOUT");
 
-            TempData["activeUser"] = null;
-            TempData["userAuthLevel"] = 4;
+            ViewBag.activeUser = null;
             
-            HttpContext.Session.SetString("userEmail", "?");
-            HttpContext.Session.SetString("userPasswordHash", "?");
+            HttpContext.Session.SetString("userEmail", "");
+            HttpContext.Session.SetString("userPasswordHash", "");
             HttpContext.Session.SetInt32("userAuthLevel", 4);
             
             return RedirectToAction("Index");
@@ -139,8 +138,8 @@ namespace Cet322Afied.Controllers
             TblUser login_user = context.TblUser.FirstOrDefault(login_user => user.UserEmail.Equals(userEmail));
             if(!HttpContext.Session.IsAvailable) return RedirectToAction("Index");
             
-            HttpContext.Session.SetString("userEmail", "?");
-            HttpContext.Session.SetString("userPasswordHash", "?");
+            HttpContext.Session.SetString("userEmail", "");
+            HttpContext.Session.SetString("userPasswordHash", "");
 
             if (login_user != null) {
                 if (Convert.FromBase64String(login_user.UserPasswordHash).SequenceEqual(Convert.FromBase64String(userPasswordHash))) {
